@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if plan else 'New' }} Plan{% endblock %}
+{% block page_title %}{{ 'Edit' if plan else 'New' }} Pricing Plan{% endblock %}
+{% block breadcrumb %}<a href="{{ url_for('pricing_list') }}">Pricing</a> <span>/</span> <span>{{ 'Edit' if plan else 'New' }}</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-{% if plan %}edit{% else %}plus{% endif %}" style="color: var(--primary); margin-right: 8px;"></i> {{ 'Edit' if plan else 'Add New' }} Plan</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Plan Name</label>
+          <input type="text" name="name" class="form-control" value="{{ plan.name if plan else '' }}" placeholder="e.g. Professional" required>
+        </div>
+        <div class="form-group">
+          <label>Badge Text</label>
+          <input type="text" name="badge_text" class="form-control" value="{{ plan.badge_text if plan else '' }}" placeholder="e.g. Most Popular">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" step="0.01" name="price" class="form-control" value="{{ plan.price if plan else 0 }}">
+        </div>
+        <div class="form-group">
+          <label>Currency</label>
+          <input type="text" name="currency" class="form-control" value="{{ plan.currency if plan else '€' }}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Period</label>
+          <input type="text" name="period" class="form-control" value="{{ plan.period if plan else '/month' }}">
+        </div>
+        <div class="form-group">
+          <label>Order</label>
+          <input type="number" name="order_index" class="form-control" value="{{ plan.order_index if plan else 0 }}">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Button Text</label>
+          <input type="text" name="button_text" class="form-control" value="{{ plan.button_text if plan else 'Get Started' }}">
+        </div>
+        <div class="form-group">
+          <label>Button URL</label>
+          <input type="text" name="button_url" class="form-control" value="{{ plan.button_url if plan else '#' }}">
+        </div>
+      </div>
+
+      <!-- Plan Features -->
+      <div class="form-group">
+        <label>Plan Features</label>
+        <div id="featuresList">
+          {% if plan and plan.features_list %}
+          {% for feat in plan.features_list %}
+          <div class="feature-row" style="display: flex; gap: 10px; margin-bottom: 8px; align-items: center;">
+            <input type="text" name="feat_text" class="form-control" value="{{ feat.text }}" placeholder="Feature text" style="flex: 1;">
+            <label class="form-check" style="margin: 0; white-space: nowrap;">
+              <input type="checkbox" name="feat_included" value="{{ loop.index0 }}" {% if feat.included %}checked{% endif %}>
+              <span>Included</span>
+            </label>
+            <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger btn-sm btn-icon"><i class="fas fa-times"></i></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <button type="button" onclick="addFeatureRow()" class="btn btn-outline btn-sm" style="margin-top: 8px;">
+          <i class="fas fa-plus"></i> Add Feature
+        </button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" name="is_featured" {% if plan and plan.is_featured %}checked{% endif %}>
+            <span>Featured Plan (highlighted)</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" name="is_visible" {% if not plan or plan.is_visible %}checked{% endif %}>
+            <span>Visible</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Plan</button>
+        <a href="{{ url_for('pricing_list') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let featIdx = {{ (plan.features_list|length) if plan and plan.features_list else 0 }};
+function addFeatureRow() {
+  const div = document.createElement('div');
+  div.className = 'feature-row';
+  div.style.cssText = 'display: flex; gap: 10px; margin-bottom: 8px; align-items: center;';
+  div.innerHTML = `
+    <input type="text" name="feat_text" class="form-control" placeholder="Feature text" style="flex: 1;">
+    <label class="form-check" style="margin: 0; white-space: nowrap;">
+      <input type="checkbox" name="feat_included" value="${featIdx}" checked>
+      <span>Included</span>
+    </label>
+    <button type="button" onclick="this.parentElement.remove()" class="btn btn-danger btn-sm btn-icon"><i class="fas fa-times"></i></button>
+  `;
+  document.getElementById('featuresList').appendChild(div);
+  featIdx++;
+}
+</script>
+{% endblock %}

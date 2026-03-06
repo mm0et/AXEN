@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" width="520" height="140">
+  <defs>
+    <linearGradient id="nodeGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f4793b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e05e20;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="hexGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f4793b;stop-opacity:0.12" />
+      <stop offset="100%" style="stop-color:#f4793b;stop-opacity:0.03" />
+    </linearGradient>
+    <filter id="glowL">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Light background -->
+  <rect width="520" height="140" rx="14" fill="#f5f7fa"/>
+
+  <!-- Hexagon background -->
+  <polygon points="70,15 103,33 103,70 70,88 37,70 37,33"
+    fill="url(#hexGradL)" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+
+  <!-- Neural connection lines -->
+  <line x1="52" y1="38" x2="70" y2="52" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="88" y1="38" x2="70" y2="52" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="52" y1="38" x2="70" y2="64" stroke="#f4793b" stroke-width="0.8" stroke-opacity="0.25"/>
+  <line x1="88" y1="38" x2="52" y2="64" stroke="#f4793b" stroke-width="0.8" stroke-opacity="0.25"/>
+  <line x1="70" y1="52" x2="52" y2="64" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="70" y1="52" x2="88" y2="64" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="52" y1="64" x2="70" y2="76" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="88" y1="64" x2="70" y2="76" stroke="#f4793b" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="52" y1="64" x2="88" y2="64" stroke="#f4793b" stroke-width="0.8" stroke-opacity="0.2"/>
+  <line x1="44" y1="52" x2="52" y2="38" stroke="#f4793b" stroke-width="0.8" stroke-opacity="0.35"/>
+  <line x1="44" y1="52" x2="52" y2="64" stroke="#f4793b" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="96" y1="52" x2="88" y2="38" stroke="#f4793b" stroke-width="0.8" stroke-opacity="0.35"/>
+  <line x1="96" y1="52" x2="88" y2="64" stroke="#f4793b" stroke-width="1" stroke-opacity="0.4"/>
+
+  <!-- Input layer nodes -->
+  <circle cx="52" cy="38" r="5.5" fill="#ffffff" stroke="#f4793b" stroke-width="1.8" filter="url(#glowL)"/>
+  <circle cx="88" cy="38" r="5.5" fill="#ffffff" stroke="#f4793b" stroke-width="1.8" filter="url(#glowL)"/>
+  <circle cx="44" cy="52" r="4" fill="#ffffff" stroke="#f4793b" stroke-width="1.5" stroke-opacity="0.7"/>
+  <circle cx="96" cy="52" r="4" fill="#ffffff" stroke="#f4793b" stroke-width="1.5" stroke-opacity="0.7"/>
+
+  <!-- Active/filled nodes -->
+  <circle cx="70" cy="52" r="7" fill="url(#nodeGradL)"/>
+  <circle cx="52" cy="64" r="5.5" fill="url(#nodeGradL)"/>
+  <circle cx="88" cy="64" r="5.5" fill="url(#nodeGradL)"/>
+
+  <!-- Output node -->
+  <circle cx="70" cy="76" r="7" fill="#ffffff" stroke="#f4793b" stroke-width="2.5"/>
+  <circle cx="70" cy="76" r="3.5" fill="#f4793b"/>
+
+  <!-- Hex corner dots -->
+  <circle cx="70" cy="15" r="2.5" fill="#f4793b" opacity="0.8"/>
+  <circle cx="103" cy="33" r="2" fill="#f4793b" opacity="0.5"/>
+  <circle cx="103" cy="70" r="2" fill="#f4793b" opacity="0.5"/>
+  <circle cx="70" cy="88" r="2.5" fill="#f4793b" opacity="0.8"/>
+  <circle cx="37" cy="70" r="2" fill="#f4793b" opacity="0.5"/>
+  <circle cx="37" cy="33" r="2" fill="#f4793b" opacity="0.5"/>
+
+  <!-- Text -->
+  <text x="126" y="72"
+    font-family="'Segoe UI', 'Arial Black', 'Helvetica Neue', sans-serif"
+    font-size="46" font-weight="800" letter-spacing="-1"
+    fill="#061122">Neur</text>
+
+  <text x="244" y="72"
+    font-family="'Segoe UI', 'Arial Black', 'Helvetica Neue', sans-serif"
+    font-size="46" font-weight="800" letter-spacing="-1"
+    fill="#f4793b">Ops</text>
+
+  <rect x="126" y="79" width="220" height="1.5" rx="1" fill="#f4793b" opacity="0.4"/>
+
+  <text x="127" y="96"
+    font-family="'Segoe UI', Arial, sans-serif"
+    font-size="13" font-weight="500" letter-spacing="3.5"
+    fill="#5a6a7a">IT &amp; AI SOLUTIONS</text>
+
+  <rect x="360" y="60" width="38" height="18" rx="9" fill="none" stroke="#f4793b" stroke-width="1" stroke-opacity="0.6"/>
+  <text x="379" y="73" font-family="Arial, sans-serif" font-size="9" font-weight="700" fill="#f4793b" text-anchor="middle" letter-spacing="1">2025</text>
+
+</svg>

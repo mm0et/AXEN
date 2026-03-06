@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Messages{% endblock %}
+{% block page_title %}Messages{% endblock %}
+{% block breadcrumb %}<span>Messages</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-envelope" style="color: var(--info); margin-right: 8px;"></i> Contact Messages</h3>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    {% if messages %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr><th>From</th><th>Email</th><th>Subject</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for m in messages %}
+          <tr style="{% if not m.is_read %}font-weight: 600;{% endif %}">
+            <td>{{ m.name }}</td>
+            <td><small>{{ m.email }}</small></td>
+            <td>{{ m.subject or 'No subject' }}</td>
+            <td><small>{{ m.created_at.strftime('%d/%m/%Y %H:%M') }}</small></td>
+            <td>
+              <span class="status-badge {% if m.is_read %}active{% else %}inactive{% endif %}">
+                {{ 'Read' if m.is_read else 'New' }}
+              </span>
+            </td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ url_for('message_view', id=m.id) }}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
+                <form method="POST" action="{{ url_for('message_delete', id=m.id) }}" onsubmit="return confirm('Delete?');" style="display:inline;">
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="fas fa-inbox"></i>
+      <h4>No messages yet</h4>
+      <p>Messages from the contact form will appear here.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

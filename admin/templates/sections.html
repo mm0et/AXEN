@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Sections{% endblock %}
+{% block page_title %}Sections{% endblock %}
+{% block breadcrumb %}<span>Sections</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-layer-group" style="color: var(--primary); margin-right: 8px;"></i> Page Sections</h3>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Section</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Last Updated</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for section in sections %}
+          <tr>
+            <td><strong>#{{ section.order_index }}</strong></td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                  <i class="fas fa-{% if section.name == 'hero' %}rocket{% elif section.name == 'features' %}star{% elif section.name == 'servers' %}globe{% elif section.name == 'testimonials' %}quote-left{% elif section.name == 'pricing' %}tags{% elif section.name == 'download' %}mobile-alt{% elif section.name == 'contact' %}headset{% else %}layer-group{% endif %}"></i>
+                </div>
+                <strong>{{ section.name|title }}</strong>
+              </div>
+            </td>
+            <td>{{ section.title[:50] }}{% if section.title|length > 50 %}...{% endif %}</td>
+            <td>
+              <span class="status-badge {% if section.is_visible %}active{% else %}inactive{% endif %}">
+                {{ 'Visible' if section.is_visible else 'Hidden' }}
+              </span>
+            </td>
+            <td><small>{{ section.updated_at.strftime('%d/%m/%Y %H:%M') if section.updated_at else '-' }}</small></td>
+            <td>
+              <a href="{{ url_for('section_edit', id=section.id) }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-edit"></i> Edit
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

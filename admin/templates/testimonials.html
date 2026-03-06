@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Testimonials{% endblock %}
+{% block page_title %}Testimonials{% endblock %}
+{% block breadcrumb %}<span>Testimonials</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-quote-left" style="color: var(--accent); margin-right: 8px;"></i> Testimonials</h3>
+    <a href="{{ url_for('testimonial_edit') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Testimonial</a>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    {% if testimonials %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr><th>Order</th><th>Name</th><th>Role</th><th>Rating</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for t in testimonials %}
+          <tr>
+            <td>#{{ t.order_index }}</td>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 600;">
+                  {{ t.name[0]|upper }}
+                </div>
+                <strong>{{ t.name }}</strong>
+              </div>
+            </td>
+            <td>{{ t.role }}</td>
+            <td>{% for i in range(t.rating) %}<i class="fas fa-star" style="color: var(--warning); font-size: 12px;"></i>{% endfor %}</td>
+            <td><span class="status-badge {% if t.is_visible %}active{% else %}inactive{% endif %}">{{ 'Visible' if t.is_visible else 'Hidden' }}</span></td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ url_for('testimonial_edit', id=t.id) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="{{ url_for('testimonial_delete', id=t.id) }}" onsubmit="return confirm('Delete?');" style="display:inline;">
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="fas fa-quote-left"></i>
+      <h4>No testimonials yet</h4>
+      <a href="{{ url_for('testimonial_edit') }}" class="btn btn-primary" style="margin-top: 10px;"><i class="fas fa-plus"></i> Add Testimonial</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

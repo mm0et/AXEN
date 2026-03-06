@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#061122"/>
+      <stop offset="100%" style="stop-color:#0d2040"/>
+    </linearGradient>
+    <linearGradient id="oG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f4793b"/>
+      <stop offset="100%" style="stop-color:#e05e20"/>
+    </linearGradient>
+    <filter id="gF">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gF2">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="200" height="200" rx="20" fill="url(#bgF)"/>
+
+  <!-- Glow aura -->
+  <circle cx="100" cy="100" r="70" fill="#f4793b" fill-opacity="0.03"/>
+
+  <!-- Hex outer ring -->
+  <polygon points="100,20 154,50 154,110 100,140 46,110 46,50"
+    fill="none" stroke="#f4793b" stroke-width="1.5" stroke-opacity="0.3"/>
+  <!-- Hex inner ring -->
+  <polygon points="100,35 140,58 140,103 100,126 60,103 60,58"
+    fill="none" stroke="#f4793b" stroke-width="0.8" stroke-opacity="0.18"/>
+
+  <!-- Neural connections -->
+  <line x1="80" y1="55" x2="100" y2="73" stroke="#f4793b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="120" y1="55" x2="100" y2="73" stroke="#f4793b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="80" y1="55" x2="100" y2="88" stroke="#f4793b" stroke-width="0.9" opacity="0.28"/>
+  <line x1="120" y1="55" x2="80" y2="88" stroke="#f4793b" stroke-width="0.9" opacity="0.28"/>
+  <line x1="100" y1="73" x2="80" y2="88" stroke="#f4793b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="100" y1="73" x2="120" y2="88" stroke="#f4793b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="80" y1="88" x2="100" y2="104" stroke="#f4793b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="120" y1="88" x2="100" y2="104" stroke="#f4793b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="80" y1="88" x2="120" y2="88" stroke="#f4793b" stroke-width="0.9" opacity="0.22"/>
+
+  <!-- Side nodes + connections -->
+  <line x1="64" y1="73" x2="80" y2="55" stroke="#f4793b" stroke-width="1" opacity="0.38"/>
+  <line x1="64" y1="73" x2="80" y2="88" stroke="#f4793b" stroke-width="1.2" opacity="0.42"/>
+  <line x1="136" y1="73" x2="120" y2="55" stroke="#f4793b" stroke-width="1" opacity="0.38"/>
+  <line x1="136" y1="73" x2="120" y2="88" stroke="#f4793b" stroke-width="1.2" opacity="0.42"/>
+
+  <!-- Input layer -->
+  <circle cx="80" cy="55" r="7" fill="#0d2040" stroke="#f4793b" stroke-width="2.2" filter="url(#gF)"/>
+  <circle cx="120" cy="55" r="7" fill="#0d2040" stroke="#f4793b" stroke-width="2.2" filter="url(#gF)"/>
+  <circle cx="64" cy="73" r="5.5" fill="#0d2040" stroke="#f4793b" stroke-width="1.8" stroke-opacity="0.65"/>
+  <circle cx="136" cy="73" r="5.5" fill="#0d2040" stroke="#f4793b" stroke-width="1.8" stroke-opacity="0.65"/>
+
+  <!-- Hidden / Active nodes -->
+  <circle cx="100" cy="73" r="10" fill="url(#oG)" filter="url(#gF2)"/>
+  <circle cx="80" cy="88" r="8" fill="url(#oG)" filter="url(#gF)"/>
+  <circle cx="120" cy="88" r="8" fill="url(#oG)" filter="url(#gF)"/>
+
+  <!-- Output node -->
+  <circle cx="100" cy="104" r="11" fill="#0d2040" stroke="#f4793b" stroke-width="3" filter="url(#gF2)"/>
+  <circle cx="100" cy="104" r="5.5" fill="#f4793b"/>
+
+  <!-- Hex vertex accents -->
+  <circle cx="100" cy="20" r="4" fill="#f4793b" opacity="0.9"/>
+  <circle cx="154" cy="50" r="3" fill="#f4793b" opacity="0.6"/>
+  <circle cx="154" cy="110" r="3" fill="#f4793b" opacity="0.6"/>
+  <circle cx="100" cy="140" r="4" fill="#f4793b" opacity="0.9"/>
+  <circle cx="46" cy="110" r="3" fill="#f4793b" opacity="0.6"/>
+  <circle cx="46" cy="50" r="3" fill="#f4793b" opacity="0.6"/>
+
+  <!-- Brand text below icon -->
+  <text x="100" y="165"
+    font-family="'Segoe UI', 'Arial Black', sans-serif"
+    font-size="28" font-weight="800" letter-spacing="-0.5"
+    fill="#ffffff" text-anchor="middle">Neur<tspan fill="#f4793b">Ops</tspan></text>
+
+  <text x="100" y="184"
+    font-family="'Segoe UI', Arial, sans-serif"
+    font-size="9.5" font-weight="500" letter-spacing="3"
+    fill="#7a8da0" text-anchor="middle">IT &amp; AI SOLUTIONS</text>
+
+</svg>

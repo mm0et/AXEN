@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Features{% endblock %}
+{% block page_title %}Features{% endblock %}
+{% block breadcrumb %}<span>Features</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-star" style="color: var(--warning); margin-right: 8px;"></i> Features</h3>
+    <a href="{{ url_for('feature_edit') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Feature</a>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    {% if features %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr><th>Order</th><th>Icon</th><th>Title</th><th>Description</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for f in features %}
+          <tr>
+            <td>#{{ f.order_index }}</td>
+            <td><i class="{{ f.icon }}" style="font-size: 20px; color: var(--primary);"></i></td>
+            <td><strong>{{ f.title }}</strong></td>
+            <td><small>{{ f.description[:60] }}{% if f.description|length > 60 %}...{% endif %}</small></td>
+            <td><span class="status-badge {% if f.is_visible %}active{% else %}inactive{% endif %}">{{ 'Visible' if f.is_visible else 'Hidden' }}</span></td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ url_for('feature_edit', id=f.id) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="{{ url_for('feature_delete', id=f.id) }}" onsubmit="return confirm('Delete this feature?');" style="display:inline;">
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="fas fa-star"></i>
+      <h4>No features yet</h4>
+      <p>Add your first feature to get started.</p>
+      <a href="{{ url_for('feature_edit') }}" class="btn btn-primary" style="margin-top: 10px;"><i class="fas fa-plus"></i> Add Feature</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

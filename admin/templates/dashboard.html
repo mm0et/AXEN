@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block breadcrumb %}<span>Overview</span>{% endblock %}
+
+{% block content %}
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-card-icon purple"><i class="fas fa-layer-group"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.sections }}</h4><span>Sections</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon green"><i class="fas fa-star"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.features }}</h4><span>Features</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon blue"><i class="fas fa-tags"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.plans }}</h4><span>Pricing Plans</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon orange"><i class="fas fa-quote-left"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.testimonials }}</h4><span>Testimonials</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon cyan"><i class="fas fa-globe"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.servers }}</h4><span>Server Locations</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon purple"><i class="fas fa-images"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.media }}</h4><span>Media Files</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon red"><i class="fas fa-envelope"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.messages }}</h4><span>Unread Messages</span></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-icon green"><i class="fas fa-users"></i></div>
+    <div class="stat-card-info"><h4>{{ stats.users }}</h4><span>Users</span></div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+  <div class="card">
+    <div class="card-header"><h3><i class="fas fa-bolt" style="color: var(--warning); margin-right: 8px;"></i> Quick Actions</h3></div>
+    <div class="card-body">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <a href="{{ url_for('sections_list') }}" class="btn btn-outline" style="justify-content: center;"><i class="fas fa-edit"></i> Edit Sections</a>
+        <a href="{{ url_for('feature_edit') }}" class="btn btn-outline" style="justify-content: center;"><i class="fas fa-plus"></i> Add Feature</a>
+        <a href="{{ url_for('pricing_edit') }}" class="btn btn-outline" style="justify-content: center;"><i class="fas fa-plus"></i> Add Plan</a>
+        <a href="{{ url_for('testimonial_edit') }}" class="btn btn-outline" style="justify-content: center;"><i class="fas fa-plus"></i> Add Testimonial</a>
+        <a href="{{ url_for('media_library') }}" class="btn btn-outline" style="justify-content: center;"><i class="fas fa-upload"></i> Upload Media</a>
+        <a href="{{ url_for('settings') }}" class="btn btn-outline" style="justify-content: center;"><i class="fas fa-cog"></i> Settings</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><h3><i class="fas fa-envelope" style="color: var(--primary); margin-right: 8px;"></i> Recent Messages</h3></div>
+    <div class="card-body" style="padding: 0;">
+      {% if recent_messages %}
+      <table>
+        <tbody>
+          {% for msg in recent_messages %}
+          <tr>
+            <td>
+              <a href="{{ url_for('message_view', id=msg.id) }}">
+                <strong style="{% if not msg.is_read %}color: var(--primary);{% endif %}">{{ msg.name }}</strong>
+                <br><small style="color: var(--text-secondary);">{{ msg.subject or 'No subject' }}</small>
+              </a>
+            </td>
+            <td style="text-align: right; white-space: nowrap;">
+              <small style="color: var(--text-secondary);">{{ msg.created_at.strftime('%d/%m/%Y') }}</small>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty-state" style="padding: 30px;">
+        <i class="fas fa-inbox"></i>
+        <p>No messages yet</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- System Info -->
+<div class="card">
+  <div class="card-header"><h3><i class="fas fa-info-circle" style="color: var(--info); margin-right: 8px;"></i> System Info</h3></div>
+  <div class="card-body">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 13px;">
+      <div><strong>CMS Version:</strong> 1.0.0</div>
+      <div><strong>Framework:</strong> Flask + SQLAlchemy</div>
+      <div><strong>Last Login:</strong> {{ current_user.last_login.strftime('%d/%m/%Y %H:%M') if current_user.last_login else 'N/A' }}</div>
+    </div>
+  </div>
+</div>
+{% endblock %}

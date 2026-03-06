@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block page_title %}Users{% endblock %}
+{% block breadcrumb %}<span>Users</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-users" style="color: var(--info); margin-right: 8px;"></i> Users</h3>
+    <a href="{{ url_for('user_edit') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add User</a>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr><th>User</th><th>Email</th><th>Role</th><th>Last Login</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600;">
+                  {{ u.display_name[0]|upper if u.display_name else 'U' }}
+                </div>
+                <div>
+                  <strong>{{ u.display_name }}</strong>
+                  <br><small style="color: var(--text-secondary);">@{{ u.username }}</small>
+                </div>
+              </div>
+            </td>
+            <td>{{ u.email }}</td>
+            <td><span class="status-badge active">{{ u.role|title }}</span></td>
+            <td><small>{{ u.last_login.strftime('%d/%m/%Y %H:%M') if u.last_login else 'Never' }}</small></td>
+            <td>
+              <a href="{{ url_for('user_edit', id=u.id) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Pricing Plans{% endblock %}
+{% block page_title %}Pricing Plans{% endblock %}
+{% block breadcrumb %}<span>Pricing Plans</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-tags" style="color: var(--success); margin-right: 8px;"></i> Pricing Plans</h3>
+    <a href="{{ url_for('pricing_edit') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Plan</a>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    {% if plans %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr><th>Order</th><th>Name</th><th>Price</th><th>Featured</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for p in plans %}
+          <tr>
+            <td>#{{ p.order_index }}</td>
+            <td><strong>{{ p.name }}</strong>{% if p.badge_text %} <span class="status-badge active">{{ p.badge_text }}</span>{% endif %}</td>
+            <td><strong>{{ p.currency }}{{ "%.2f"|format(p.price) }}</strong><small>{{ p.period }}</small></td>
+            <td>{% if p.is_featured %}<i class="fas fa-star" style="color: var(--warning);"></i>{% else %}-{% endif %}</td>
+            <td><span class="status-badge {% if p.is_visible %}active{% else %}inactive{% endif %}">{{ 'Visible' if p.is_visible else 'Hidden' }}</span></td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ url_for('pricing_edit', id=p.id) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="{{ url_for('pricing_delete', id=p.id) }}" onsubmit="return confirm('Delete this plan?');" style="display:inline;">
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="fas fa-tags"></i>
+      <h4>No pricing plans yet</h4>
+      <a href="{{ url_for('pricing_edit') }}" class="btn btn-primary" style="margin-top: 10px;"><i class="fas fa-plus"></i> Add Plan</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

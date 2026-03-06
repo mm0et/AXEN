@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Server Locations{% endblock %}
+{% block page_title %}Server Locations{% endblock %}
+{% block breadcrumb %}<span>Server Locations</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-globe" style="color: var(--accent); margin-right: 8px;"></i> Server Locations</h3>
+    <a href="{{ url_for('server_edit') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Add Location</a>
+  </div>
+  <div class="card-body" style="padding: 0;">
+    {% if servers %}
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr><th>Order</th><th>Country</th><th>Servers</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {% for s in servers %}
+          <tr>
+            <td>#{{ s.order_index }}</td>
+            <td><span style="font-size: 20px; margin-right: 8px;">{{ s.flag_emoji }}</span> <strong>{{ s.country }}</strong></td>
+            <td>{{ s.server_count }} servers</td>
+            <td><span class="status-badge {% if s.is_visible %}active{% else %}inactive{% endif %}">{{ 'Visible' if s.is_visible else 'Hidden' }}</span></td>
+            <td>
+              <div class="btn-group">
+                <a href="{{ url_for('server_edit', id=s.id) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="{{ url_for('server_delete', id=s.id) }}" onsubmit="return confirm('Delete?');" style="display:inline;">
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="fas fa-globe"></i>
+      <h4>No server locations yet</h4>
+      <a href="{{ url_for('server_edit') }}" class="btn btn-primary" style="margin-top: 10px;"><i class="fas fa-plus"></i> Add Location</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

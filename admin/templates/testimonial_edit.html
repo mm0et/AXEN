@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if testimonial else 'New' }} Testimonial{% endblock %}
+{% block page_title %}{{ 'Edit' if testimonial else 'New' }} Testimonial{% endblock %}
+{% block breadcrumb %}<a href="{{ url_for('testimonials_list') }}">Testimonials</a> <span>/</span> <span>{{ 'Edit' if testimonial else 'New' }}</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" class="form-control" value="{{ testimonial.name if testimonial else '' }}" required>
+        </div>
+        <div class="form-group">
+          <label>Role / Position</label>
+          <input type="text" name="role" class="form-control" value="{{ testimonial.role if testimonial else '' }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Testimonial Text</label>
+        <textarea name="content" class="form-control" rows="4" required>{{ testimonial.content if testimonial else '' }}</textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Rating (1-5)</label>
+          <input type="number" name="rating" class="form-control" min="1" max="5" value="{{ testimonial.rating if testimonial else 5 }}">
+        </div>
+        <div class="form-group">
+          <label>Order</label>
+          <input type="number" name="order_index" class="form-control" value="{{ testimonial.order_index if testimonial else 0 }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Avatar Image</label>
+        <input type="file" name="avatar" class="form-control" accept="image/*">
+        {% if testimonial and testimonial.avatar %}
+        <div class="form-help" style="margin-top: 8px;">Current: {{ testimonial.avatar }}</div>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" name="is_visible" {% if not testimonial or testimonial.is_visible %}checked{% endif %}>
+          <span>Visible</span>
+        </label>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+        <a href="{{ url_for('testimonials_list') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

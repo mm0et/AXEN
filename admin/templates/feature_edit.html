@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if feature else 'New' }} Feature{% endblock %}
+{% block page_title %}{{ 'Edit' if feature else 'New' }} Feature{% endblock %}
+{% block breadcrumb %}<a href="{{ url_for('features_list') }}">Features</a> <span>/</span> <span>{{ 'Edit' if feature else 'New' }}</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-{% if feature %}edit{% else %}plus{% endif %}" style="color: var(--primary); margin-right: 8px;"></i> {{ 'Edit' if feature else 'Add New' }} Feature</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" name="title" class="form-control" value="{{ feature.title if feature else '' }}" placeholder="Feature title" required>
+        </div>
+        <div class="form-group">
+          <label>Icon (Font Awesome class)</label>
+          <input type="text" name="icon" class="form-control" value="{{ feature.icon if feature else 'fas fa-star' }}" placeholder="fas fa-star">
+          <div class="form-help">e.g. fas fa-shield-halved, fas fa-bolt, fas fa-globe</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" class="form-control" rows="4" placeholder="Feature description...">{{ feature.description if feature else '' }}</textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Order</label>
+          <input type="number" name="order_index" class="form-control" value="{{ feature.order_index if feature else 0 }}">
+        </div>
+        <div class="form-group" style="display: flex; align-items: end; padding-bottom: 20px;">
+          <label class="form-check">
+            <input type="checkbox" name="is_visible" {% if not feature or feature.is_visible %}checked{% endif %}>
+            <span>Visible</span>
+          </label>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Feature</button>
+        <a href="{{ url_for('features_list') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

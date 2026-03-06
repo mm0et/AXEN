@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Edit Section — {{ section.name|title }}{% endblock %}
+{% block page_title %}Edit Section{% endblock %}
+{% block breadcrumb %}<a href="{{ url_for('sections_list') }}">Sections</a> <span>/</span> <span>{{ section.name|title }}</span>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3><i class="fas fa-edit" style="color: var(--primary); margin-right: 8px;"></i> Edit "{{ section.name|title }}" Section</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-group">
+        <label>Section Name</label>
+        <input type="text" class="form-control" value="{{ section.name }}" disabled>
+        <div class="form-help">Section identifier (cannot be changed)</div>
+      </div>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" name="title" class="form-control" value="{{ section.title }}" placeholder="Section title">
+      </div>
+      <div class="form-group">
+        <label>Subtitle</label>
+        <input type="text" name="subtitle" class="form-control" value="{{ section.subtitle }}" placeholder="Section subtitle">
+      </div>
+      <div class="form-group">
+        <label>Content</label>
+        <textarea name="content" class="form-control" rows="6" placeholder="Section content...">{{ section.content }}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" name="is_visible" {% if section.is_visible %}checked{% endif %}>
+          <span>Visible on page</span>
+        </label>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+        <a href="{{ url_for('sections_list') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
